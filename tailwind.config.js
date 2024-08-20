@@ -5,12 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#f42c37",
-        secondary: "#f42c37",
-        brandYellow: "#fdc62e",
-        brandGreen: "#2dcc6f",
-        brandBlue: "#1376f4",
-        brandWhite: "#eeeeee",
+        primary: "#ea3a3a",
+        secondary: "#e1811f",
+        brandYellow: "#ffc800",
+        brandGreen: "#69fc65",
+        brandBlue: "#4758d6",
+        brandWhite: "#eeeded",
       },
       container: {
         center: true,

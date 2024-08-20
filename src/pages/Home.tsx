@@ -59,9 +59,10 @@ const Home = () => {
     }, []);
   
     return (
-      <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
+      <div className="w-full min-h-screen bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
         <Navbar handleOrderPopup={handleOrderPopup} />
         <Hero handleOrderPopup={handleOrderPopup} />
+        {/* 
         <Category />
         <Category2 />
         <Services />
@@ -71,7 +72,7 @@ const Home = () => {
         <Blogs />
         <Partners />
         <Footer />
-        <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />
+        <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} /> */}
       </div>
     );
 }

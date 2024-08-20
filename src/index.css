@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary-color: #ea3a3a;
+  --secondary-color: #4758d6;
+  --accent-color: #e1811f;
+  --neutral-color: #201c1c;
+  --base-color: #eeeded;
+  --info-color: #60b3ff;
+  --success-color: #69fc65;
+  --warning-color: #ffc800;
+  --error-color: #ff6777;
+}
+
+@layer components{ 
+  .search-bar {
+    @apply w-0 group-hover:w-[300px] transition-all duration-300 rounded-full group-hover:border group-hover:border-gray-500 px-3 py-1 focus:outline-none focus:border dark:border-gray-800 dark:bg-gray-900 group-hover:dark:bg-gray-800;
+  }
+}

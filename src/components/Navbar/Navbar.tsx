@@ -1,4 +1,3 @@
-import React from "react";
 import { FaCaretDown, FaCartShopping } from "react-icons/fa6";
 import { IoMdSearch } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -45,7 +44,7 @@ const DropdownLinks = [
   },
 ];
 
-const Navbar = ({ handleOrderPopup }: { handleOrderPopup: () => void }) => {
+const Navbar = () => {
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
       <div className="py-4">
@@ -87,7 +86,7 @@ const Navbar = ({ handleOrderPopup }: { handleOrderPopup: () => void }) => {
                   <div className="w-[200px] p-2 absolute z-[9999] hidden group-hover:block text-gray-500 dark:text-white bg-white dark:bg-gray-900 rounded-md shadow-md">
                     <ul className="space-y-2">
                       {DropdownLinks.map((link) => (
-                        <li>
+                        <li key={link.id}>
                           <Link to={link.href} className="w-full p-2 hover:bg-primary/20 inline-block rounded-md font-semibold text-gray-500 hover:text-black dark:text-white duration-200">{link.name}</Link>
                         </li>
                       ))}

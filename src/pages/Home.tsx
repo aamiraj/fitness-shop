@@ -1,10 +1,14 @@
 import React from "react";
 
-import headphone from "../assets/hero/headphone.png";
-import smartwatch2 from "../assets/category/smartwatch2-removebg-preview.png";
+import Cycle from "../assets/category/cycle2.png";
+import Treadmill from "../assets/category/cycle2.png";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import Navbar from "../components/Navbar/Navbar";
 import Hero from "../components/Hero/Hero";
 import Category from "../components/Category/Category";
@@ -20,34 +24,28 @@ import Popup from "../components/Popup/Popup";
 const BannerData = {
   discount: "30% OFF",
   title: "Fine Smile",
-  date: "10 Jan to 28 Jan",
-  image: headphone,
-  title2: "Air Solo Bass",
-  title3: "Winter Sale",
+  date: "10 Aug to 28 Aug",
+  image: Cycle,
+  title2: "Wheel As Fast As You Can",
+  title3: "Summer Sale",
   title4:
     "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque reiciendis",
-  bgColor: "#f42c37",
+  bgColor: "#ffc800",
 };
 
 const BannerData2 = {
   discount: "30% OFF",
   title: "Happy Hours",
-  date: "14 Jan to 28 Jan",
-  image: smartwatch2,
-  title2: "Smart Solo",
-  title3: "Winter Sale",
+  date: "14 Aug to 28 Aug",
+  image: Treadmill,
+  title2: "Run Like A Speadstar",
+  title3: "Summer Sale",
   title4:
     "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque reiciendis",
-  bgColor: "#2dcc6f",
+  bgColor: "#4758d6",
 };
 
 const Home = () => {
-    const [orderPopup, setOrderPopup] = React.useState(false);
-
-    const handleOrderPopup = () => {
-      setOrderPopup(!orderPopup);
-    };
-  
     React.useEffect(() => {
       AOS.init({
         duration: 800,
@@ -59,14 +57,14 @@ const Home = () => {
     }, []);
   
     return (
-      <div className="w-full min-h-screen bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
-        <Navbar handleOrderPopup={handleOrderPopup} />
-        <Hero handleOrderPopup={handleOrderPopup} />
-        {/* 
+      <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
+        <Navbar />
+        <Hero />
         <Category />
         <Category2 />
         <Services />
         <Banner data={BannerData} />
+        {/* 
         <Products />
         <Banner data={BannerData2} />
         <Blogs />

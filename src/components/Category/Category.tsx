@@ -82,7 +82,7 @@ const Category = () => {
               />
             </div>
             {/* third category  */}
-            <div className="lg:col-span-2 py-10 pl-5 bg-gradient-to-br from-primary/90 to-primary/70 text-white rounded-2xl relative h-[320px] flex items-end">
+            <div className="sm:col-span-2 py-10 pl-5 bg-gradient-to-br from-primary/90 to-primary/70 text-white rounded-2xl relative h-[320px] flex items-end">
               <div className="z-20">
                 <div className="mb-4">
                   <p className="mb-1 text-2xl font-bold text-gray-400">

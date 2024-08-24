@@ -1,7 +1,8 @@
-import { FaCaretDown, FaCartShopping } from "react-icons/fa6";
+import { FaBars, FaCaretDown, FaCartShopping } from "react-icons/fa6";
 import { IoMdSearch } from "react-icons/io";
 import { Link } from "react-router-dom";
 import DarkMode from "./DarkMode";
+import OffCanvasMenu from "./OffCanvasMenu";
 
 const MenuLinks = [
   {
@@ -12,7 +13,7 @@ const MenuLinks = [
   {
     id: 2,
     name: "Shop",
-    href: "/#shop",
+    href: "/shop",
   },
   {
     id: 3,
@@ -45,16 +46,31 @@ const DropdownLinks = [
 ];
 
 const Navbar = () => {
+  const openNav = () => {
+    const canvas = document.getElementById("offcanvas");
+    if (canvas) {
+      canvas.style.width = "250px";
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
+      <OffCanvasMenu menus={MenuLinks} />
       <div className="py-4">
         <div className="container flex justify-between items-center gap-4">
           {/* logo and link sections  */}
           <div className="flex items-center gap-4">
+            {/* offcanvas button  */}
+            <span
+              className="block lg:hidden text-2xl cursor-pointer"
+              onClick={openNav}
+            >
+              <FaBars />
+            </span>
             {/* logo  */}
             <Link
               to={"/"}
-              className="text-primary font-semibold tracking-widest text-2xl uppercase sm:text-3xl"
+              className="text-primary font-semibold tracking-widest text-sm uppercase sm:text-3xl"
             >
               Fitness Shop
             </Link>
@@ -87,7 +103,12 @@ const Navbar = () => {
                     <ul className="space-y-2">
                       {DropdownLinks.map((link) => (
                         <li key={link.id}>
-                          <Link to={link.href} className="w-full p-2 hover:bg-primary/20 inline-block rounded-md font-semibold text-gray-500 hover:text-black dark:text-white duration-200">{link.name}</Link>
+                          <Link
+                            to={link.href}
+                            className="w-full p-2 hover:bg-primary/20 inline-block rounded-md font-semibold text-gray-500 hover:text-black dark:text-white duration-200"
+                          >
+                            {link.name}
+                          </Link>
                         </li>
                       ))}
                     </ul>

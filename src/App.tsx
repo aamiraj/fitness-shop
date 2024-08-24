@@ -1,11 +1,14 @@
-import { RouterProvider } from "react-router-dom";
-import router from "./router/routes";
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <main className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </main>
   );
 }
 

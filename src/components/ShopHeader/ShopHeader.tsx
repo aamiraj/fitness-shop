@@ -1,10 +1,11 @@
 import { FaFilter } from "react-icons/fa6";
+import ShopFilter from "../ShopFilter/ShopFilter";
 
 const ShopHeader = () => {
   const openNav = () => {
     const canvas = document.getElementById("offcanvas2");
     if (canvas) {
-      canvas.style.width = "250px";
+      canvas.style.width = "300px";
     }
   };
 
@@ -22,7 +23,7 @@ const ShopHeader = () => {
         <button
           type="button"
           onClick={openNav}
-          className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md text-xs"
+          className="flex xl:hidden items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md text-xs"
         >
           <FaFilter />
           Filter
@@ -36,6 +37,8 @@ const ShopHeader = () => {
           <option value="">Default</option>
           <option value="lowtohigh">Price Low to High</option>
           <option value="hightolow">Price High to Low</option>
+          <option value="hightolow">Name A to Z</option>
+          <option value="hightolow">Name Z to A</option>
         </select>
       </div>
       {/* offcanvas menus  */}
@@ -46,13 +49,13 @@ const ShopHeader = () => {
         <button
           type="button"
           onClick={closeNav}
-          className="absolute top-0 left-0 text-4xl ml-12"
+          className="absolute top-0 left-0 text-4xl"
         >
           &times;
         </button>
-        <ul>
-          <li>Search Field</li>
-        </ul>
+        <div>
+          <ShopFilter />
+        </div>
       </div>
     </div>
   );

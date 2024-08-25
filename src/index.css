@@ -14,6 +14,12 @@
   --error-color: #ff6777;
 }
 
+@layer base {
+  label {
+    @apply font-semibold text-lg dark:text-white;
+  }
+}
+
 @layer components {
   .search-bar {
     @apply w-0 group-hover:w-[300px] transition-all duration-300 rounded-full group-hover:border group-hover:border-gray-500 px-3 py-1 focus:outline-none focus:border dark:border-gray-800 dark:bg-gray-900 group-hover:dark:bg-gray-800;
@@ -24,4 +30,14 @@
   .hero-bg-color {
     @apply bg-gradient-to-r from-gray-300/80 to-gray-100 dark:from-gray-900 dark:to-gray-800 dark:text-white;
   }
+}
+
+#range-slider .range-slider__range {
+  background: #ea3a3a;
+  transition: height 0.3s;
+}
+
+#range-slider .range-slider__thumb {
+  background: #d60000;
+  transition: transform 0.3s;
 }

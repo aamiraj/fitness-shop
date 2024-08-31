@@ -77,6 +77,7 @@ const Hero = () => {
                       <Button
                         textColor={"text-white"}
                         bgColor={"bg-primary"}
+                        disabled={false}
                         handler={() => 0}
                       >
                         Shop Now

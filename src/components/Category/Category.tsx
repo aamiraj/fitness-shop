@@ -44,6 +44,7 @@ const Category = () => {
                   <Button
                     bgColor={"bg-primary"}
                     textColor={"text-white"}
+                    disabled={false}
                     handler={() => 0}
                   >
                     Browse Now
@@ -69,6 +70,7 @@ const Category = () => {
                   <Button
                     bgColor={"bg-white"}
                     textColor={"text-brandYellow"}
+                    disabled={false}
                     handler={() => 0}
                   >
                     Browse Now
@@ -94,6 +96,7 @@ const Category = () => {
                   <Button
                     bgColor={"bg-white"}
                     textColor={"text-primary"}
+                    disabled={false}
                     handler={() => 0}
                   >
                     Browse Now

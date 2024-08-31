@@ -43,6 +43,7 @@ const Category2 = () => {
                   <Button
                     bgColor={"bg-white"}
                     textColor={"text-primary"}
+                    disabled={false}
                     handler={() => 0}
                   >
                     Browse Now
@@ -68,6 +69,7 @@ const Category2 = () => {
                   <Button
                     bgColor={"bg-white"}
                     textColor={"text-brandGreen"}
+                    disabled={false}
                     handler={() => 0}
                   >
                     Browse Now
@@ -93,6 +95,7 @@ const Category2 = () => {
                   <Button
                     bgColor={"bg-white"}
                     textColor={"text-brandBlue"}
+                    disabled={false}
                     handler={() => 0}
                   >
                     Browse Now

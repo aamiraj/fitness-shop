@@ -64,7 +64,6 @@ const ShopFilter = () => {
 
   return (
     <div>
-      {/* sidebar for filter  */}
       <div className="w-[300px] p-4">
         <div className="flex flex-col gap-4 mb-4">
           <label htmlFor="searchbyname">Search by name</label>

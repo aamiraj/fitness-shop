@@ -34,7 +34,7 @@ const ShopHeader = () => {
           className="text-xs px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md"
           defaultValue={""}
         >
-          <option value="">Default</option>
+          <option value="">Default Sort</option>
           <option value="lowtohigh">Price Low to High</option>
           <option value="hightolow">Price High to Low</option>
           <option value="hightolow">Name A to Z</option>

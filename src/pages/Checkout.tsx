@@ -7,8 +7,8 @@ const Checkout = () => {
         <p className="text-2xl lg:text-4xl font-bold py-4">Checkout</p>
         <div>
           <p className="text-lg lg:text-2xl font-bold py-4">User Details</p>
-          <form className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-            <div className="py-4 flex flex-col gap-4">
+          <form className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="p-4 flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <label htmlFor="name">Name</label>
                 <input
@@ -36,6 +36,7 @@ const Checkout = () => {
                   className="px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-800 outline-1 outline-sky-500 border rounded-lg"
                 />
               </div>
+              
               <div className="flex flex-col gap-2">
                 <label htmlFor="address">Address</label>
                 <textarea
@@ -53,7 +54,7 @@ const Checkout = () => {
                     type="radio"
                     name="paymentMethod"
                     id="cashOnDeliver"
-                    checked
+                    defaultChecked
                   />
                   <label htmlFor="cashOnDeliver">Cash on delivery</label>
                 </div>

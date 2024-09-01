@@ -1,3 +1,4 @@
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import CartProducts from "../components/Cart/CartProducts";
 import CostOverview from "../components/Checkout/CostOverview";
 
@@ -14,6 +15,13 @@ const Cart = () => {
             <CartProducts />
             <CartProducts />
             <CartProducts />
+            <p className="py-2 flex justify-end items-center gap-2">
+              <span className="font-semibold text-lg">Subtotal:</span>
+              <span className="font-bold text-lg flex items-center gap-0">
+                600
+                <FaBangladeshiTakaSign />
+              </span>
+            </p>
           </div>
           <CostOverview />
         </div>

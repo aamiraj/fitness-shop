@@ -4,7 +4,7 @@ import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 const CartProducts = () => {
   return (
-    <div className="py-4 border-b-2">
+    <div className="flex flex-col xl:flex-row gap-2 py-4 border-b-2">
       <div className="flex gap-2">
         {/* image part  */}
         <div className="flex items-center justify-center">
@@ -28,20 +28,20 @@ const CartProducts = () => {
         <div className="flex items-center gap-0">
           <button
             type="button"
-            className="w-[24px] p-1 font-bold bg-gray-200 dark:bg-gray-600 border dark:border-gray-600 rounded-l-lg"
+            className="w-[24px] p-1 font-bold bg-gray-200 dark:bg-gray-600 border dark:border-gray-600 "
           >
             -
           </button>
           <input
             type="text"
-            className="w-[40px] p-1 text-center text-base dark:bg-gray-500 outline-0 border dark:border-gray-500"
+            className="w-[48px] p-1 text-center text-base dark:bg-gray-500 outline-0 border dark:border-gray-500"
             name="quantity"
             id="quantity"
             value={0}
           />
           <button
             type="button"
-            className="w-[24px] p-1 font-bold bg-gray-200 dark:bg-gray-600 border dark:border-gray-600 rounded-r-lg"
+            className="w-[24px] p-1 font-bold bg-gray-200 dark:bg-gray-600 border dark:border-gray-600 "
           >
             +
           </button>

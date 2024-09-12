@@ -8,6 +8,8 @@ import Checkout from "../pages/Checkout";
 import ProductManagement from "../pages/ProductManagement";
 import AddProduct from "../pages/AddProduct";
 import AboutUs from "../pages/AboutUs";
+import LogIn from "../pages/LogIn";
+import SignUp from "../pages/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -50,11 +52,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/log-in",
-    element: <div>Log in</div>,
+    element: <LogIn />,
   },
   {
     path: "/sign-up",
-    element: <div>Sign up</div>,
+    element: <SignUp />,
   },
 ]);
 

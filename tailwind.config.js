@@ -11,6 +11,9 @@ export default {
         brandGreen: "#69fc65",
         brandBlue: "#4758d6",
         brandWhite: "#eeeded",
+        success: "#69fc65",
+        warning: "#ffc800",
+        error: "#ff6777",
       },
       container: {
         center: true,

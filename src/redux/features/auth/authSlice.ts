@@ -6,7 +6,6 @@ import type { RootState } from "../../store";
 export interface UsersState {
   email: string;
   role: string;
-  token: string;
   iat: string;
 }
 
@@ -25,13 +24,20 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    
+    setUser: (state, action: PayloadAction<AuthState>) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+    },
+    logOut: (state) => {
+      state.user = null;
+      state.token = null;
+    },
   },
 });
 
-export const {  } = authSlice.actions;
+export const { setUser, logOut } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.auth.value;
+export const selectUser = (state: RootState) => state.auth.user;
 
 export default authSlice.reducer;

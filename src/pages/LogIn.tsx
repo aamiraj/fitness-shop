@@ -16,6 +16,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginFormSchema } from "../validation";
 import { useLogInCustomerMutation } from "../redux/features/auth/authApi";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/features/auth/authSlice";
+import decodeJwtToken from "../utils/jwtHelper";
 
 const LogIn = () => {
   const {
@@ -26,6 +29,7 @@ const LogIn = () => {
     resolver: zodResolver(loginFormSchema),
   });
   const [logIn, { isLoading }] = useLogInCustomerMutation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit = async (data: LogInFormData) => {
@@ -35,6 +39,19 @@ const LogIn = () => {
       if (!res?.success) {
         toast.error("Failed to log in!");
       }
+
+      const { email, iat, role } = decodeJwtToken(res?.data?.accessToken);
+
+      dispatch(
+        setUser({
+          user: {
+            email: email,
+            role: role,
+            iat: iat,
+          },
+          token: res?.data?.accessToken,
+        })
+      );
 
       toast.success("Successfully logged in.");
       navigate("/");

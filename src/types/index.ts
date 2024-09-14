@@ -21,3 +21,10 @@ export type FormFieldProps = {
 }
 
 export type ValidFieldNames = keyof RegisterFormData;
+
+export type JwtReturnType = {
+  email: string;
+  role: string;
+  iat: string;
+  exp: string;
+}

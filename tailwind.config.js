@@ -22,6 +22,9 @@ export default {
           sm: "3rem",
         },
       },
+      transitionProperty: {
+        'height': 'height',
+      }
     },
   },
   plugins: [],

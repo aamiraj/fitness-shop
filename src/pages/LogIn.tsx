@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginFormSchema } from "../validation";
 import { useLogInCustomerMutation } from "../redux/features/auth/authApi";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/auth/authSlice";
 import decodeJwtToken from "../utils/jwtHelper";
@@ -73,6 +73,7 @@ const LogIn = () => {
 
   return (
     <div className="gradient-2">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="container">
         {/* sign in log in form  */}
         <div className="h-screen flex items-center justify-center">

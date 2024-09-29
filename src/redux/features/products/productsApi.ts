@@ -9,26 +9,26 @@ const productsApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    getSingleProduct: builder.query({
+    getAllProducts: builder.query({
       query: () => ({
         url: "/products",
       }),
     }),
-    getAllProducts: builder.query({
+    getSingleProduct: builder.query({
       query: (id) => ({
-        url: `/products/:${id}`,
+        url: `/products/${id}`,
       }),
     }),
-    editProduct: builder.mutation({
-      query: ({ id, ...data }) => ({
-        url: `/products/:${id}`,
+    updateProduct: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/products/${id}`,
         method: "PATCH",
         body: data,
       }),
     }),
     deleteProduct: builder.mutation({
       query: ({ id, ...data }) => ({
-        url: `/products/:${id}`,
+        url: `/products/${id}`,
         method: "DELETE",
         body: data,
       }),
@@ -36,4 +36,9 @@ const productsApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useAddProductMutation } = productsApi;
+export const {
+  useAddProductMutation,
+  useGetAllProductsQuery,
+  useGetSingleProductQuery,
+  useUpdateProductMutation,
+} = productsApi;

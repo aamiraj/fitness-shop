@@ -1,4 +1,5 @@
 export type TProduct = {
+  _id: string;
   images: Array<string>;
   name: string;
   description: string;

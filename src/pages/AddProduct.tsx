@@ -2,11 +2,21 @@ import { useForm } from "react-hook-form";
 import { TFormProduct } from "../types/product.types";
 import React, { useState } from "react";
 // import Product from "../assets/product/p-1.webp";
-import { FaArrowRotateLeft } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRotateLeft, FaXmark } from "react-icons/fa6";
 import { useAddProductMutation } from "../redux/features/products/productsApi";
 import toast, { Toaster } from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addProductSchema } from "../validation/product.validation";
+import { Link } from "react-router-dom";
+
+type TImage = {
+  [key: string]: string | File;
+  id: string;
+  src: string;
+  file: File;
+};
+
+const getId = () => Math.random().toString(36).substring(2, 7);
 
 const AddProduct = () => {
   const {
@@ -16,11 +26,14 @@ const AddProduct = () => {
   } = useForm<TFormProduct>({
     resolver: zodResolver(addProductSchema),
   });
-  const [imgs, setImgs] = useState<FileList>();
-  const [addProduct] = useAddProductMutation();
+  const [imgs, setImgs] = useState<TImage[] | null>(null);
+  const [addProduct, { isLoading }] = useAddProductMutation();
 
   const onSubmit = async (data: TFormProduct) => {
-    const refinedData: TFormProduct = {
+    const formData = new FormData();
+
+    const refinedData = {
+      images: [] as string[],
       name: data.name,
       description: data.description,
       price: parseFloat(data.price as string),
@@ -28,12 +41,11 @@ const AddProduct = () => {
       category: data.category,
     };
 
-    const formData = new FormData();
     formData.append("data", JSON.stringify(refinedData));
 
     if (imgs) {
       for (let i = 0; i < imgs?.length; i++) {
-        formData.append("images", imgs[i]);
+        formData.append("images", imgs[i].file);
       }
     }
 
@@ -48,16 +60,38 @@ const AddProduct = () => {
 
   const handelImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imgFiles = e.target.files;
-    if (imgFiles) setImgs(imgFiles);
+    if (imgFiles) {
+      const imgObject = [...imgFiles].map((file) => ({
+        id: getId(),
+        src: URL.createObjectURL(file as File),
+        file: file,
+      }));
+
+      setImgs((prev) => (prev ? [...prev, ...imgObject] : imgObject));
+    }
+  };
+
+  const handleImageDelete = (id: string) => {
+    const newImgObject = (imgs as TImage[])?.filter((obj) => obj.id !== id);
+    setImgs(newImgObject);
   };
 
   return (
-    <div className="">
+    <div className="max-w-[768px] mx-auto my-8">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="container">
-        <p className="font-bold text-xl md:text-2xl lg:text-4xl">
-          Add A Product
-        </p>
+        <div className="flex items-center gap-4 my-8">
+          <Link
+            to={"/product-management"}
+            className="text-xl md:text-2xl lg:text-4xl"
+          >
+            <FaArrowLeft />
+          </Link>
+          <p className="font-bold text-xl md:text-2xl lg:text-4xl">
+            Add A Product
+          </p>
+        </div>
+
         <form onSubmit={handleSubmit(onSubmit)} className="py-4 space-y-8">
           {/* product images  */}
           <div className="flex flex-col gap-2">
@@ -74,7 +108,7 @@ const AddProduct = () => {
               {/* reset button  */}
               <button
                 type="button"
-                onClick={() => setImgs(undefined)}
+                onClick={() => setImgs(null)}
                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-100/10"
               >
                 <FaArrowRotateLeft />
@@ -82,24 +116,29 @@ const AddProduct = () => {
             </div>
 
             <div className="w-full relative flex flex-col sm:flex-row items-center gap-4 p-4 border border-dashed bg-gray-50 dark:bg-gray-700 border-brandBlue rounded-lg overflow-auto">
-              {[imgs]?.map((img, idx) => {
-                if (img && img?.length > 0) {
-                  const images = [...Array(img.length)].map((_i, id) => (
-                    <img
-                      key={id}
-                      src={URL.createObjectURL(img[id] as File)}
-                      alt="product"
-                      className="w-11/12 sm:w-32 object-cover"
-                    />
-                  ));
-                  return <React.Fragment key={idx}>{images}</React.Fragment>;
-                }
-                return (
-                  <p key={idx} className="text-center text-gray-500">
-                    No file choosen.
-                  </p>
-                );
-              })}
+              {imgs?.map((img, idx) => (
+                <div
+                  key={idx}
+                  className="relative group border-8 border-transparent hover:border-gray-200 rounded-lg"
+                >
+                  <button
+                    type="button"
+                    onClick={() => handleImageDelete(img.id)}
+                    className="hidden group-hover:block absolute -top-4 -right-4 text-lg font-bold p-1 bg-gray-200 hover:bg-gray-300 rounded-full z-10"
+                  >
+                    <FaXmark />
+                  </button>
+                  <img
+                    src={img?.src}
+                    alt="product"
+                    className="w-11/12 sm:w-32 object-cover group-hover:scale-105"
+                  />
+                </div>
+              ))}
+
+              {(imgs === null || imgs.length === 0) && (
+                <p className="text-center text-gray-500">No file choosen.</p>
+              )}
             </div>
           </div>
           {/* product name or title  */}
@@ -202,12 +241,23 @@ const AddProduct = () => {
             )}
           </div>
 
-          <button
-            type="submit"
-            className="w-full my-4 bg-brandBlue/80 text-white cursor-pointer hover:bg-brandBlue duration-300 py-2 px-8 rounded-full relative z-10 uppercase"
-          >
-            Add a product
-          </button>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 my-4">
+            <button
+              type="submit"
+              className="w-full flex items-center justify-center md:w-[240px] bg-brandBlue/80 text-white cursor-pointer hover:bg-brandBlue duration-300 py-2 px-8 rounded-full relative z-10 uppercase disabled:cursor-not-allowed disabled:bg-brandBlue/40"
+              disabled={isLoading}
+            >
+              Add a product
+              {isLoading && <span className="loader ms-3"></span>}
+            </button>
+
+            <button
+              type="button"
+              className="w-full md:w-[240px] bg-gray-200 text-gray-700 cursor-pointer hover:bg-gray-300 duration-300 py-2 px-8 rounded-full relative z-10 uppercase"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>

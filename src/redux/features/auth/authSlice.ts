@@ -4,6 +4,8 @@ import type { RootState } from "../../store";
 
 // Define a type for the slice state
 export interface UsersState {
+  id: string;
+  fullName: string;
   email: string;
   role: string;
   iat: string;

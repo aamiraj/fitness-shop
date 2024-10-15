@@ -1,6 +1,17 @@
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import { useAppSelector } from "../../redux/hooks";
 
-const CostOverview = () => {
+const calculateDiscount = (price: number, discount: number) => price * discount;
+
+const calculateGrandTotal = (
+  price: number,
+  shippingCost: number,
+  discount: number
+) => price + shippingCost - discount;
+
+const CostOverview = ({ subtotal }: { subtotal: number }) => {
+  const { global } = useAppSelector((state) => state);
+
   return (
     <div>
       {/* calculation of the products  */}
@@ -10,33 +21,37 @@ const CostOverview = () => {
           <tbody>
             <tr>
               <td>
-                <p>{"Subtotal (+)"}</p>
+                <p>{"Subtotal(+)"}</p>
               </td>
               <td className="">
                 <p className="flex justify-end items-center gap-0">
-                  <span>600</span>
+                  <span>{subtotal.toFixed(2)}</span>
                   <FaBangladeshiTakaSign />
                 </p>
               </td>
             </tr>
             <tr>
               <td>
-                <p>{"Shipping (+)"}</p>
+                <p>{"Shipping(+60)"}</p>
               </td>
               <td>
                 <p className="flex justify-end items-center gap-0">
-                  <span>100</span>
+                  <span>{global.SHIPPING_COST.toFixed(2)}</span>
                   <FaBangladeshiTakaSign />
                 </p>
               </td>
             </tr>
             <tr>
               <td>
-                <p>{"Discount (-)"}</p>
+                <p>{"Discount(-10%)"}</p>
               </td>
               <td>
                 <p className="flex justify-end items-center gap-0">
-                  <span>60</span>
+                  <span>
+                    {calculateDiscount(subtotal, global.DISCOUNT_PCTG).toFixed(
+                      2
+                    )}
+                  </span>
                   <FaBangladeshiTakaSign />
                 </p>
               </td>
@@ -47,7 +62,13 @@ const CostOverview = () => {
               </td>
               <td>
                 <p className="flex justify-end items-center gap-0 font-bold">
-                  <span>640</span>
+                  <span>
+                    {calculateGrandTotal(
+                      subtotal,
+                      global.SHIPPING_COST,
+                      subtotal * global.DISCOUNT_PCTG
+                    ).toFixed(2)}
+                  </span>
                   <FaBangladeshiTakaSign />
                 </p>
               </td>

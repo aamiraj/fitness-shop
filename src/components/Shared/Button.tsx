@@ -13,7 +13,7 @@ const Button = ({
   bgColor,
   textColor,
   disabled,
-  handler = () => {},
+  handler,
 }: AppProps) => {
   return (
     <button

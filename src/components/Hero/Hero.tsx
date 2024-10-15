@@ -2,6 +2,12 @@ import Slider from "react-slick";
 import Tradmill from "../../assets/hero/treadmill.png";
 import Dumbbell from "../../assets/hero/dumbell.png";
 import Button from "../Shared/Button";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import {
+  resetCategory,
+  setCategory,
+} from "../../redux/features/filter/filterSlice";
 
 const HeroSlides = [
   {
@@ -10,6 +16,7 @@ const HeroSlides = [
     title1: "Best Brand Motorized",
     title2: "Treadmill",
     subtitle: "Treadmill For Your Home",
+    navigate: "Treadmill",
   },
   {
     id: 2,
@@ -17,10 +24,20 @@ const HeroSlides = [
     title1: "Premium Quality Heavyweight",
     title2: "Dumbbell",
     subtitle: "Lift Weight, Stay Fit",
+    navigate: "Dumbbell",
   },
 ];
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleCTA = (category: string) => {
+    dispatch(resetCategory());
+    dispatch(setCategory(category));
+    navigate("/shop");
+  };
+
   const settings = {
     dots: false,
     arrows: false,
@@ -78,7 +95,7 @@ const Hero = () => {
                         textColor={"text-white"}
                         bgColor={"bg-primary"}
                         disabled={false}
-                        handler={() => 0}
+                        handler={() => handleCTA(slide.navigate)}
                       >
                         Shop Now
                       </Button>
@@ -86,10 +103,7 @@ const Hero = () => {
                   </div>
                   {/* image part  */}
                   <div className="order-1 sm:order-2">
-                    <div
-                      data-aos="zoom-in"
-                      data-aos-once="true"
-                    >
+                    <div data-aos="zoom-in" data-aos-once="true">
                       <img
                         className="w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] sm:scale-105 lg:scale-110 object-contain mx-auto drop-shadow-[-8px_4px_6px_rgba(0,0,0,0.4)] relative z-40"
                         src={slide.img}

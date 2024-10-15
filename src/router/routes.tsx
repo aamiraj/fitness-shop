@@ -3,14 +3,17 @@ import App from "../App";
 import Home from "../pages/Home";
 import Shop from "../pages/Shop";
 import ProductDetails from "../pages/ProductDetails";
-import Cart from "../pages/Cart";
-import Checkout from "../pages/Checkout";
-import ProductManagement from "../pages/ProductManagement";
-import AddProduct from "../pages/AddProduct";
+import Cart from "../pages/Customer/Cart";
+import Checkout from "../pages/Customer/Checkout";
+import ProductManagement from "../pages/Admin/ProductManagement";
+import AddProduct from "../pages/Admin/AddProduct";
 import AboutUs from "../pages/AboutUs";
 import LogIn from "../pages/LogIn";
 import SignUp from "../pages/SignUp";
-import EditProduct from "../pages/EditProduct";
+import EditProduct from "../pages/Admin/EditProduct";
+import Admin from "../pages/Admin/Admin";
+import Blog from "../pages/Blog";
+import Success from "../pages/Success";
 
 const router = createBrowserRouter([
   {
@@ -22,36 +25,50 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/shop',
+        path: "/shop",
         element: <Shop />,
       },
       {
-        path: '/product/:id',
+        path: "/product/:id",
         element: <ProductDetails />,
       },
       {
-        path: '/cart',
+        path: "/blog/1",
+        element: <Blog />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
+      },
+      {
+        path: "/success",
+        element: <Success />,
+      },
+      {
+        path: "/customer/cart",
         element: <Cart />,
       },
       {
-        path: '/checkout',
+        path: "/customer/checkout",
         element: <Checkout />,
       },
       {
-        path: '/product-management',
-        element: <ProductManagement />,
-      },
-      {
-        path: '/add-product',
-        element: <AddProduct />,
-      },
-      {
-        path: '/edit-product/:productId',
-        element: <EditProduct />,
-      },
-      {
-        path: '/about-us',
-        element: <AboutUs />,
+        path: "/admin",
+        element: <Admin />,
+        children: [
+          {
+            path: "/admin/product-management",
+            element: <ProductManagement />,
+          },
+          {
+            path: "/admin/add-product",
+            element: <AddProduct />,
+          },
+          {
+            path: "/admin/edit-product/:productId",
+            element: <EditProduct />,
+          },
+        ],
       },
     ],
   },

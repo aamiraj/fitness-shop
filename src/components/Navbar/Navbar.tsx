@@ -1,8 +1,9 @@
-import { FaBars, FaCaretDown, FaCartShopping } from "react-icons/fa6";
-import { IoMdSearch } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { FaBars, FaCartShopping } from "react-icons/fa6";
+import { Link, useNavigate } from "react-router-dom";
 import DarkMode from "./DarkMode";
 import OffCanvasMenu from "./OffCanvasMenu";
+import { useAppSelector } from "../../redux/hooks";
+import Dropdown from "../Dropdown/Dropdown";
 
 const MenuLinks = [
   {
@@ -23,29 +24,14 @@ const MenuLinks = [
   {
     id: 4,
     name: "Blogs",
-    href: "/#blogs",
-  },
-];
-
-const DropdownLinks = [
-  {
-    id: 1,
-    name: "Trending Products",
-    href: "/#trending-products",
-  },
-  {
-    id: 2,
-    name: "Best Selling",
-    href: "/#best-selling",
-  },
-  {
-    id: 3,
-    name: "Top Rated",
-    href: "/#top-rated",
+    href: "#blogs",
   },
 ];
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { auth, cart } = useAppSelector((state) => state);
+
   const openNav = () => {
     const canvas = document.getElementById("offcanvas");
     if (canvas) {
@@ -87,8 +73,8 @@ const Navbar = () => {
                     </Link>
                   </li>
                 ))}
-                {/* dropdown  */}
-                <li className="relative cursor-pointer group">
+                {/* dropdown with dropdown links  */}
+                {/* <li className="relative cursor-pointer group">
                   <Link
                     to={"/#"}
                     className="flex items-center gap-[2px] font-semibold text-gray-500 dark:hover:text-white py-2"
@@ -98,8 +84,8 @@ const Navbar = () => {
                       <FaCaretDown className="group-hover:rotate-180 duration-300" />
                     </span>
                   </Link>
-                  {/* dropdown links  */}
-                  <div className="w-[200px] p-2 absolute z-[9999] hidden group-hover:block text-gray-500 dark:text-white bg-white dark:bg-gray-900 rounded-md shadow-md">
+
+                <div className="w-[200px] p-2 absolute z-[9999] hidden group-hover:block text-gray-500 dark:text-white bg-white dark:bg-gray-900 rounded-md shadow-md">
                     <ul className="space-y-2">
                       {DropdownLinks.map((link) => (
                         <li key={link.id}>
@@ -113,22 +99,40 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
           {/* navbar right part  */}
           <div className="flex justify-between items-center gap-4">
             {/* search bar  */}
-            <div className="relative group hidden sm:block ">
+            {/* <div className="relative group hidden sm:block ">
               <input type="text" placeholder="Search" className="search-bar" />
               <IoMdSearch className="text-xl text-gray-600 dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 group-hover:text-primary duration-200" />
+            </div> */}
+            {/* profile part  */}
+            <div>
+              {auth.user ? (
+                <Dropdown />
+              ) : (
+                <Link
+                  to={"/log-in"}
+                  title="Log In"
+                  className="hidden md:block rounded-full px-8 py-2 bg-primary text-white text-center uppercase hover:bg-red-900 "
+                >
+                  Log In
+                </Link>
+              )}
             </div>
             {/* cart button  */}
-            <button className="relative p-3">
-              <FaCartShopping className="text-xl text-gray-600 dark:text-gray-400" />
-              <div className="w-4 h-4 bg-primary text-white rounded-full absolute top-0 right-0 flec items-center justify-center text-xs ">
-                2
+            <button
+              onClick={() => navigate("/customer/cart")}
+              title="Cart"
+              className="relative p-3"
+            >
+              <FaCartShopping className="text-xl text-gray-600 cursor-pointer dark:text-gray-400 hover:text-primary hover:dark:text-primary" />
+              <div className="w-4 h-4 bg-primary text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs ">
+                {cart.length}
               </div>
             </button>
             {/* dark mode button  */}
@@ -143,3 +147,21 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// const DropdownLinks = [
+//   {
+//     id: 1,
+//     name: "Trending Products",
+//     href: "/#trending-products",
+//   },
+//   {
+//     id: 2,
+//     name: "Best Selling",
+//     href: "/#best-selling",
+//   },
+//   {
+//     id: 3,
+//     name: "Top Rated",
+//     href: "/#top-rated",
+//   },
+// ];

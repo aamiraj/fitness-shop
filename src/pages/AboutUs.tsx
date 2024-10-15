@@ -8,6 +8,7 @@ import Profile from "../assets/profile-pic/profile-1.jpg";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import useScrollTop from "../hooks/useScrollTop";
 
 const settings = {
   dots: true,
@@ -47,6 +48,8 @@ const testimonials = [
 ];
 
 const AboutUs = () => {
+  useScrollTop();
+
   useEffect(() => {
     AOS.init({
       duration: 800,

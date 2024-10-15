@@ -2,31 +2,46 @@ import Dumbbell from "../../assets/category/dumbbell.png";
 import Bench from "../../assets/category/bench.png";
 import Misc from "../../assets/category/misc.png";
 import Button from "../Shared/Button";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import { resetCategory, setCategory } from "../../redux/features/filter/filterSlice";
 
 const CategoryCards = [
   {
     id: 1,
     img: Dumbbell,
     name: "Dumbbell",
-    line: "Lift Up"
+    line: "Lift Up",
+    navigate: "Dumbbell"
   },
   {
     id: 2,
     img: Bench,
     name: "Bench",
-    line: "Strech On"
+    line: "Strech On",
+    navigate: "Bench"
   },
   {
     id: 3,
     img: Misc,
     name: "Misc",
-    line: "Want More"
+    line: "Want More",
+    navigate: "Misc"
   },
 ];
 
 const Category2 = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleNavigate = (category: string) => {
+    dispatch(resetCategory());
+    dispatch(setCategory(category));
+    navigate("/shop");
+  };
+
   return (
-    <div className="py-8">
+    <div className="pt-2 pb-8">
       <div className="container">
         <div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -44,7 +59,7 @@ const Category2 = () => {
                     bgColor={"bg-white"}
                     textColor={"text-primary"}
                     disabled={false}
-                    handler={() => 0}
+                    handler={() => handleNavigate(CategoryCards[0].navigate)}
                   >
                     Browse Now
                   </Button>
@@ -70,7 +85,7 @@ const Category2 = () => {
                     bgColor={"bg-white"}
                     textColor={"text-brandGreen"}
                     disabled={false}
-                    handler={() => 0}
+                    handler={() =>  handleNavigate(CategoryCards[1].navigate)}
                   >
                     Browse Now
                   </Button>
@@ -96,7 +111,7 @@ const Category2 = () => {
                     bgColor={"bg-white"}
                     textColor={"text-brandBlue"}
                     disabled={false}
-                    handler={() => 0}
+                    handler={() =>  handleNavigate(CategoryCards[2].navigate)}
                   >
                     Browse Now
                   </Button>

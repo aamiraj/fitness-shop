@@ -2,8 +2,9 @@ import Heading from "../Shared/Heading";
 import Blog1 from "../../assets/blogs/blog-1.webp";
 import Blog2 from "../../assets/blogs/blog-2.jpeg";
 import Blog3 from "../../assets/blogs/blog-3.jpg";
+import { Link } from "react-router-dom";
 
-const INIT_AOS_DELAY = "1000";
+const INIT_AOS_DELAY = "500";
 
 const blogsData = [
   {
@@ -36,7 +37,7 @@ const blogsData = [
 
 const Blogs = () => {
   return (
-    <div className="my-12">
+    <div id="blogs" className="my-12">
       <div className="container">
         {/* header section  */}
         <Heading
@@ -64,7 +65,9 @@ const Blogs = () => {
               {/* content section  */}
               <div className="space-y-3">
                 <p className="text-xs text-gray-500">{blog.published}</p>
-                <p className="font-bold line-clamp-1">{blog.title}</p>
+                <Link to={"/blog/1"} className="font-bold line-clamp-1 hover:text-brandBlue">
+                  {blog.title}
+                </Link>
                 <p className="text-sm line-clamp-2 text-gray-600 dark:text-gray-400">
                   {blog.description}
                 </p>

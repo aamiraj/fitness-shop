@@ -17,6 +17,7 @@ import Banner from "../components/Banner/Banner";
 import Blogs from "../components/Blogs/Blogs";
 import Featured from "../components/Products/Featured";
 import Gallery from "../components/Gallery/Gallery";
+import useScrollTop from "../hooks/useScrollTop";
 
 const BannerData = {
   discount: "30% OFF",
@@ -43,6 +44,8 @@ const BannerData2 = {
 };
 
 const Home = () => {
+  useScrollTop();
+
   React.useEffect(() => {
     AOS.init({
       duration: 800,

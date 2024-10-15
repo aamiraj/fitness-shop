@@ -11,7 +11,7 @@ const footerLinks = [
   {
     id: 1,
     title: "Home",
-    href: "/home",
+    href: "/",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const footerLinks = [
   {
     id: 3,
     title: "About",
-    href: "/about",
+    href: "/about-us",
   },
 ];
 const Footer = () => {

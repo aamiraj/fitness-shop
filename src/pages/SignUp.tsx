@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import {
+  FaArrowLeft,
   FaFacebook,
   FaGithub,
   FaGoogle,
@@ -14,7 +15,7 @@ import { useEffect } from "react";
 import Aos from "aos";
 import FormField from "../components/Form/FormField";
 import { useSignUpCustomerMutation } from "../redux/features/auth/authApi";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const {
@@ -39,7 +40,7 @@ const SignUp = () => {
       }
 
       toast.success("Successfully created account.");
-      navigate("/");
+      navigate("/log-in");
     } catch (error) {
       console.log(error);
       toast.error("Failed to create account!");
@@ -57,8 +58,7 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className="gradient-2 py-4">
-      <Toaster position="top-center" reverseOrder={false} />
+    <div className="">
       <div className="container">
         {/* sign in log in form  */}
         <div className="min-h-screen flex items-center justify-center">
@@ -140,6 +140,13 @@ const SignUp = () => {
                 {isLoading && <span className="loader"></span>}
               </button>
             </form>
+            <Link
+              to={"/"}
+              className="text-sm text-primary flex items-center gap-2"
+            >
+              <FaArrowLeft />
+              Back To Home
+            </Link>
           </div>
         </div>
       </div>

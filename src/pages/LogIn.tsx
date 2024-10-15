@@ -1,4 +1,5 @@
 import {
+  FaArrowLeft,
   FaFacebook,
   FaGithub,
   FaGoogle,
@@ -15,10 +16,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginFormSchema } from "../validation";
 import { useLogInCustomerMutation } from "../redux/features/auth/authApi";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/features/auth/authSlice";
+import { logOut, setUser } from "../redux/features/auth/authSlice";
 import decodeJwtToken from "../utils/jwtHelper";
+import { useAppSelector } from "../redux/hooks";
 
 const LogIn = () => {
   const {
@@ -29,6 +31,7 @@ const LogIn = () => {
     resolver: zodResolver(loginFormSchema),
   });
   const [logIn, { isLoading }] = useLogInCustomerMutation();
+  const auth = useAppSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -45,6 +48,8 @@ const LogIn = () => {
       dispatch(
         setUser({
           user: {
+            id: res?.data?.user?._id,
+            fullName: res?.data?.user?.fullName,
             email: email,
             role: role,
             iat: iat,
@@ -71,9 +76,42 @@ const LogIn = () => {
     AOS.refresh();
   }, []);
 
+  if (auth.user) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <p className="text-2xl font-bold">You are already logged in as: </p>
+          <div className="w-full max-w-[400px] p-4 grid grid-cols-2 gap-4">
+            <p>Full Name: </p>
+            <p className="font-semibold">{auth?.user?.fullName}</p>
+            <p>Email: </p>
+            <p className="font-semibold">{auth?.user?.email}</p>
+            <p>Role: </p>
+            <p className="font-semibold">{auth?.user?.role}</p>
+          </div>
+
+          <button
+            type="button"
+            className="ripple-button"
+            onClick={() => dispatch(logOut())}
+          >
+            Log Out
+          </button>
+
+          <Link
+            to={"/"}
+            className="text-sm text-primary flex items-center gap-2"
+          >
+            <FaArrowLeft />
+            Back To Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="gradient-2">
-      <Toaster position="top-center" reverseOrder={false} />
+    <div className="">
       <div className="container">
         {/* sign in log in form  */}
         <div className="h-screen flex items-center justify-center">
@@ -83,12 +121,12 @@ const LogIn = () => {
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
           >
-            <div className="space-y-4">
+            <div className="flex flex-col justify-center items-center gap-4">
               <h1 className="flex flex-col justify-center items-center gap-4 text-4xl font-bold tracking-wide p-2 text-center">
                 <FaUserCheck />
                 Sign In
               </h1>
-              <div className="flex items-center gap-2 justify-evenly">
+              <div className="text-lg flex items-center gap-2 justify-evenly">
                 <Link to={"#"} className="link">
                   <FaGoogle />
                 </Link>
@@ -132,10 +170,17 @@ const LogIn = () => {
               </Link>
 
               <button type="submit" className="ripple-button">
-                {isLoading ? "Wait..." : "Sign Up"}
+                {isLoading ? "Wait..." : "Log In"}
                 {isLoading && <span className="loader"></span>}
               </button>
             </form>
+            <Link
+              to={"/"}
+              className="text-sm text-primary flex items-center gap-2"
+            >
+              <FaArrowLeft />
+              Back To Home
+            </Link>
           </div>
         </div>
       </div>

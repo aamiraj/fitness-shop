@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { logOut } from "../../redux/features/auth/authSlice";
 
 const OffCanvasMenu = ({
   menus,
@@ -15,6 +17,9 @@ const OffCanvasMenu = ({
       offcanvas.style.width = "0";
     }
   }
+
+  const { auth } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
 
   return (
     <div>
@@ -40,6 +45,26 @@ const OffCanvasMenu = ({
               </Link>
             </li>
           ))}
+          <li className="mt-4">
+            {auth.user ? (
+              <button
+                type="button"
+                onClick={() => dispatch(logOut())}
+                title="Log In"
+                className="ml-8 rounded-full px-8 py-2 bg-primary text-white text-center uppercase hover:bg-red-900 "
+              >
+                Log Out
+              </button>
+            ) : (
+              <Link
+                to={"/log-in"}
+                title="Log In"
+                className="ml-8 rounded-full px-8 py-2 bg-primary text-white text-center uppercase hover:bg-red-900 "
+              >
+                Log In
+              </Link>
+            )}
+          </li>
         </ul>
       </div>
     </div>

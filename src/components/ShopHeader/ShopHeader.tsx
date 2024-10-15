@@ -1,11 +1,19 @@
 import { FaFilter } from "react-icons/fa6";
-import ShopFilter from "../ShopFilter/ShopFilter";
+import { ShopFilter } from "../ShopFilter/ShopFilter";
+import { useAppDispatch } from "../../redux/hooks";
+import { setSort } from "../../redux/features/filter/filterSlice";
 
 const ShopHeader = () => {
+  const dispatch = useAppDispatch();
+
+  const handleChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setSort(e.target.value));
+  };
+
   const openNav = () => {
     const canvas = document.getElementById("offcanvas2");
     if (canvas) {
-      canvas.style.width = "300px";
+      canvas.style.width = "250px";
     }
   };
 
@@ -33,12 +41,13 @@ const ShopHeader = () => {
           id="sortby"
           className="text-xs px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-md"
           defaultValue={""}
+          onChange={(e) => handleChangeSort(e)}
         >
           <option value="">Default Sort</option>
-          <option value="lowtohigh">Price Low to High</option>
-          <option value="hightolow">Price High to Low</option>
-          <option value="hightolow">Name A to Z</option>
-          <option value="hightolow">Name Z to A</option>
+          <option value="price">Price Low to High</option>
+          <option value="-price">Price High to Low</option>
+          <option value="name">Name A to Z</option>
+          <option value="-name">Name Z to A</option>
         </select>
       </div>
       {/* offcanvas menus  */}
@@ -53,7 +62,8 @@ const ShopHeader = () => {
         >
           &times;
         </button>
-        <div>
+
+        <div className="w-[250px] p-4">
           <ShopFilter />
         </div>
       </div>

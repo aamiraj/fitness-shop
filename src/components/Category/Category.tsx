@@ -2,6 +2,9 @@ import Treadmill from "../../assets/category/treadmill.png";
 import Gym from "../../assets/category/gym.png";
 import Cycle from "../../assets/category/cycle.png";
 import Button from "../Shared/Button";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import { resetCategory, setCategory } from "../../redux/features/filter/filterSlice";
 
 const CategoryCards = [
   {
@@ -9,25 +12,37 @@ const CategoryCards = [
     img: Treadmill,
     name: "Treadmill",
     line: "Run On",
+    navigate: "Treadmill"
   },
   {
     id: 2,
     img: Gym,
     name: "Gym Machine",
     line: "Chin Up",
+    navigate: "Gym"
   },
   {
     id: 3,
     img: Cycle,
     name: "Cycle",
     line: "Ride On",
+    navigate: "Bike"
   },
 ];
 
 // to be start from 1:27
 const Category = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleNavigate = (category: string) => {
+    dispatch(resetCategory());
+    dispatch(setCategory(category));
+    navigate("/shop");
+  };
+
   return (
-    <div className="py-8">
+    <div className="pt-8 pb-2">
       <div className="container">
         <div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -45,7 +60,7 @@ const Category = () => {
                     bgColor={"bg-primary"}
                     textColor={"text-white"}
                     disabled={false}
-                    handler={() => 0}
+                    handler={() => handleNavigate(CategoryCards[0].navigate)}
                   >
                     Browse Now
                   </Button>
@@ -71,7 +86,7 @@ const Category = () => {
                     bgColor={"bg-white"}
                     textColor={"text-brandYellow"}
                     disabled={false}
-                    handler={() => 0}
+                    handler={() => handleNavigate(CategoryCards[2].navigate)}
                   >
                     Browse Now
                   </Button>
@@ -97,7 +112,7 @@ const Category = () => {
                     bgColor={"bg-white"}
                     textColor={"text-primary"}
                     disabled={false}
-                    handler={() => 0}
+                    handler={() => handleNavigate(CategoryCards[1].navigate)}
                   >
                     Browse Now
                   </Button>

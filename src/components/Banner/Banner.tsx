@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type BannerData = {
   discount: string;
   title: string;
@@ -52,13 +54,13 @@ const Banner = ({ data }: { data: BannerData }) => {
               {data.title4}
             </p>
             <div data-aos="fade-up" data-aos-offset="0">
-              <button
-                type="button"
+              <Link
+                to={"/shop"}
                 style={{ color: data.bgColor }}
-                className="bg-white py-2 px-8 rounded-3xl font-bold uppercase my-4"
+                className="bg-white py-2 px-8 rounded-3xl font-bold uppercase my-4 inline-block"
               >
                 Shop Now
-              </button>
+              </Link>
             </div>
           </div>
         </div>

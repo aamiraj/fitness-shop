@@ -2,18 +2,39 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { TProduct } from "../../types/product.types";
 import { Link } from "react-router-dom";
 import { useDeleteProductMutation } from "../../redux/features/products/productsApi";
-import { useState } from "react";
 import Modal from "../Modal/Modal";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import toast from "react-hot-toast";
 
 const ListOfProducts = ({ data }: { data: TProduct[] }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [deleteProduct] = useDeleteProductMutation();
 
-  const handleDeleteProduct = (id: string) => {
-    deleteProduct(id);
-    toast.success("You have successfully deleted this product.");
+  const handleToggleDeleteModal = (id: string) => {
+    const deleteModal = document.getElementById(id);
+
+    if (deleteModal) {
+      if (deleteModal?.style.display === "none") {
+        deleteModal.style.display = "block";
+      } else {
+        deleteModal.style.display = "none";
+      }
+    }
+  };
+
+  const handleDeleteProduct = async (id: string) => {
+    try {
+      const res = await deleteProduct(id).unwrap();
+      console.log(res);
+      if (!res?.success) {
+        toast.error("Falied to delete this product.");
+        return;
+      }
+
+      toast.success("You have successfully deleted this product.");
+    } catch (error) {
+      console.log(error);
+      toast.error("Falied to delete this product.");
+    }
   };
 
   if (data?.length === 0) {
@@ -30,6 +51,7 @@ const ListOfProducts = ({ data }: { data: TProduct[] }) => {
     <table className="w-full table-auto rounded-lg">
       <thead>
         <tr>
+          <th className="th"></th>
           <th className="th">Name</th>
           <th className="th">Price</th>
           <th className="th">Stocks</th>
@@ -40,6 +62,17 @@ const ListOfProducts = ({ data }: { data: TProduct[] }) => {
       <tbody>
         {data.map((product, idx) => (
           <tr key={idx} className="tr">
+            <td className="td">
+              {idx + 1}.
+              <Modal
+                id={`delete-product-${product?._id}`}
+                setToggle={() =>
+                  handleToggleDeleteModal(`delete-product-${product?._id}`)
+                }
+                handleAction={() => handleDeleteProduct(product?._id)}
+                title={product?.name}
+              />
+            </td>
             <td className="td">
               <Link
                 to={`/admin/edit-product/${product?._id}`}
@@ -70,18 +103,14 @@ const ListOfProducts = ({ data }: { data: TProduct[] }) => {
                 <li className="p-2">
                   <button
                     type="button"
-                    onClick={() => setIsOpen(true)}
+                    onClick={() =>
+                      handleToggleDeleteModal(`delete-product-${product?._id}`)
+                    }
                     title="Delete"
                     className="text-red-500 p-2 rounded-full hover:bg-gray-300"
                   >
                     <FaTrashAlt />
                   </button>
-                  {isOpen && (
-                    <Modal
-                      setIsOpen={setIsOpen}
-                      handleAction={() => handleDeleteProduct(product?._id)}
-                    />
-                  )}
                 </li>
               </ul>
             </td>

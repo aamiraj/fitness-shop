@@ -102,6 +102,7 @@ const SignUp = () => {
                 name="fullName"
                 error={errors?.fullName}
                 register={register}
+                disabled={isLoading}
               />
               {/* email field  */}
               <FormField
@@ -110,6 +111,7 @@ const SignUp = () => {
                 name="email"
                 error={errors.email}
                 register={register}
+                disabled={isLoading}
               />
               {/* password field  */}
               <FormField
@@ -118,6 +120,7 @@ const SignUp = () => {
                 name="password"
                 error={errors.password}
                 register={register}
+                disabled={isLoading}
               />
               {/* confirm password field  */}
               <FormField
@@ -126,6 +129,7 @@ const SignUp = () => {
                 name="confirmPassword"
                 error={errors?.confirmPassword}
                 register={register}
+                disabled={isLoading}
               />
               <Link to={"/log-in"} className="text-gray-600 text-sm underline">
                 Already have an account?

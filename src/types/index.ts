@@ -5,12 +5,12 @@ export type RegisterFormData = {
   email: string;
   password: string;
   confirmPassword?: string;
-}
+};
 
 export type LogInFormData = {
   email: string;
   password: string;
-}
+};
 
 export type FormFieldProps = {
   type: string;
@@ -18,7 +18,8 @@ export type FormFieldProps = {
   name: ValidFieldNames;
   register: UseFormRegister<RegisterFormData | LogInFormData>;
   error: FieldError | undefined;
-}
+  disabled: boolean;
+};
 
 export type ValidFieldNames = keyof RegisterFormData;
 
@@ -27,4 +28,4 @@ export type JwtReturnType = {
   role: string;
   iat: string;
   exp: string;
-}
+};

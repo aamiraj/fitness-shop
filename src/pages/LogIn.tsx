@@ -6,7 +6,7 @@ import {
   FaLinkedin,
   FaUserCheck,
 } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -34,6 +34,7 @@ const LogIn = () => {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onSubmit = async (data: LogInFormData) => {
     try {
@@ -59,7 +60,9 @@ const LogIn = () => {
       );
 
       toast.success("Successfully logged in.");
-      navigate("/");
+
+      if (location.state?.route) navigate(location.state?.route);
+      else navigate("/");
     } catch (error) {
       console.log(error);
       toast.error("Failed to log in!");
@@ -155,6 +158,7 @@ const LogIn = () => {
                 name="email"
                 error={errors.email}
                 register={register}
+                disabled={isLoading}
               />
               {/* password field  */}
               <FormField
@@ -163,13 +167,18 @@ const LogIn = () => {
                 name="password"
                 error={errors.password}
                 register={register}
+                disabled={isLoading}
               />
 
               <Link to={"/sign-up"} className="text-gray-600 text-sm underline">
                 Don't have an account?
               </Link>
 
-              <button type="submit" className="ripple-button">
+              <button
+                type="submit"
+                className="ripple-button"
+                disabled={isLoading}
+              >
                 {isLoading ? "Wait..." : "Log In"}
                 {isLoading && <span className="loader"></span>}
               </button>

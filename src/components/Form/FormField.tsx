@@ -7,6 +7,7 @@ const FormField: React.FC<FormFieldProps> = ({
   name,
   register,
   error,
+  disabled,
 }) => {
   return (
     <div className="w-full">
@@ -16,6 +17,7 @@ const FormField: React.FC<FormFieldProps> = ({
         required={true}
         {...register(name)}
         className="w-full p-4 rounded-lg outline-none text-gray-500 bg-white/50 backdrop-blur-md shadow-lg border border-white/30"
+        disabled={disabled}
       />
       {error && (
         <span className="text-start italic text-sm text-error font-semibold">

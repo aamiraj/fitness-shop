@@ -8,13 +8,23 @@ import {
 } from "../../redux/features/cart/cartSlice";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
-import { useState } from "react";
 import Modal from "../Modal/Modal";
 import toast from "react-hot-toast";
 
 const CartProducts = ({ product }: { product: CartState }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
+
+  const handleToggleDeleteModal = (id: string) => {
+    const deleteModal = document.getElementById(id);
+
+    if (deleteModal) {
+      if (deleteModal?.style.display === "none") {
+        deleteModal.style.display = "block";
+      } else {
+        deleteModal.style.display = "none";
+      }
+    }
+  };
 
   const handleDeleteFromCart = (id: string) => {
     dispatch(removeFromCart(id));
@@ -23,12 +33,15 @@ const CartProducts = ({ product }: { product: CartState }) => {
 
   return (
     <>
-      {isOpen && (
-        <Modal
-          setIsOpen={setIsOpen}
-          handleAction={() => handleDeleteFromCart(product.product?._id)}
-        />
-      )}
+      <Modal
+        id={`delete-cart-${product?.product?._id}`}
+        setToggle={() =>
+          handleToggleDeleteModal(`delete-cart-${product?.product?._id}`)
+        }
+        handleAction={() => handleDeleteFromCart(product?.product?._id)}
+        title={product?.product?.name}
+      />
+
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 py-4 border-b-2">
         <div className="flex gap-2">
           {/* image part  */}
@@ -84,7 +97,9 @@ const CartProducts = ({ product }: { product: CartState }) => {
           {/* remove button  */}
           <button
             type="button"
-            onClick={() => setIsOpen(true)}
+            onClick={() =>
+              handleToggleDeleteModal(`delete-cart-${product?.product?._id}`)
+            }
             className="p-2 rounded-full hover:bg-gray-200 font-bold text-red-500"
           >
             <FaTrashAlt />

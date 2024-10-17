@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import DIVISIONS from "../../../public/data/divisions.json";
 import DISTRICTS from "../../../public/data/districts.json";
 import POSTCODES from "../../../public/data/postcodes.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddNewOrderMutation } from "../../redux/features/order/orderApi";
 import toast from "react-hot-toast";
 
@@ -47,7 +47,7 @@ const calculateTotalPrice = (products: CartState[]) => {
 const Checkout = () => {
   const { cart: products, auth, global } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-  const [addNewProduct] = useAddNewOrderMutation();
+  const [addNewProduct, { isLoading }] = useAddNewOrderMutation();
   const navigate = useNavigate();
 
   const {
@@ -134,13 +134,22 @@ const Checkout = () => {
       }
 
       toast.success("Successfully ordered.");
-      navigate("/success");
       dispatch(resetCart());
+      navigate("/success");
     } catch (error) {
       toast.error("Failed to order.");
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (!auth.user) {
+      navigate("/log-in", {
+        replace: true,
+        state: { route: "/customer/checkout" },
+      });
+    }
+  }, [auth.user, navigate]);
 
   return (
     <div id="cart-page" className="py-8 md:p-8">
@@ -167,6 +176,7 @@ const Checkout = () => {
                   defaultValue={auth.user?.fullName}
                   readOnly
                   className="px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-800 outline-1 outline-sky-500 border rounded-lg"
+                  disabled={isLoading}
                 />
                 {errors.fullName && <p>*{errors.fullName.toString()}</p>}
               </div>
@@ -179,6 +189,7 @@ const Checkout = () => {
                   defaultValue={auth.user?.email}
                   readOnly
                   className="px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-800 outline-1 outline-sky-500 border rounded-lg"
+                  disabled={isLoading}
                 />
                 {errors.email && <p>*{errors.email.toString()}</p>}
               </div>
@@ -190,6 +201,7 @@ const Checkout = () => {
                   id="phone"
                   required
                   className="px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-800 outline-1 outline-sky-500 border rounded-lg"
+                  disabled={isLoading}
                 />
                 {errors.phone && <p>*{errors.phone.toString()}</p>}
               </div>
@@ -203,6 +215,7 @@ const Checkout = () => {
                   value={division.id}
                   name="division"
                   className="px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-800 outline-1 outline-sky-500 border rounded-lg"
+                  disabled={isLoading}
                 >
                   {DIVISIONS.divisions.map((div) => (
                     <option key={div.id} value={div.id}>
@@ -221,6 +234,7 @@ const Checkout = () => {
                   value={district.id}
                   name="districts"
                   className="px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-800 outline-1 outline-sky-500 border rounded-lg"
+                  disabled={isLoading}
                 >
                   {DISTRICTS.districts
                     .filter((item) => division.id === item.division_id)
@@ -241,6 +255,7 @@ const Checkout = () => {
                   value={postCode.postCode}
                   name="postCode"
                   className="px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-800 outline-1 outline-sky-500 border rounded-lg"
+                  disabled={isLoading}
                 >
                   {POSTCODES.postcodes
                     .filter((item) => item.district_id === district.id)
@@ -260,6 +275,7 @@ const Checkout = () => {
                   required
                   className="px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-800 outline-1 outline-sky-500 border rounded-lg"
                   rows={1}
+                  disabled={isLoading}
                 ></textarea>
                 {errors.address && <p>*{errors.address.toString()}</p>}
               </div>
@@ -283,14 +299,24 @@ const Checkout = () => {
                     {...register("paymentMethod")}
                     value={"stripe"}
                     id="stripe"
+                    disabled={true}
                   />
-                  <label htmlFor="stripe">Stripe</label>
+                  <label htmlFor="stripe" className="flex items-center gap-2">
+                    Stripe
+                    <span className="text-sm text-red-500">
+                      {"(Not Implemented)"}
+                    </span>
+                  </label>
                 </div>
               </div>
             </div>
             <div>
               <CostOverview subtotal={productsTotalPrice} />
-              <button type="submit" className="ripple-button w-full my-4">
+              <button
+                type="submit"
+                className="ripple-button w-full my-4"
+                disabled={isLoading}
+              >
                 Place an order
               </button>
             </div>

@@ -56,6 +56,11 @@ const Dropdown = () => {
           </Link>
           <div className="w-[200px] p-2 absolute top-[32px] right-[-72px] z-[9999] hidden group-hover:block text-gray-500 dark:text-white bg-white dark:bg-gray-900 rounded-md shadow-md">
             <ul className="space-y-2">
+              <li>
+                <p className="w-full py-2 border-b font-bold text-sm text-center ">
+                  {user?.fullName}
+                </p>
+              </li>
               {/* dropdown when admin and superAdmin  */}
               {(user?.role === "superAdmin" || user?.role === "admin") &&
                 AdminDropdownLinks.map((link) => (

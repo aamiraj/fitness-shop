@@ -83,6 +83,7 @@ const ProductCard = ({
         <FaStarHalfStroke />
         <FaRegStar />
         <FaRegStar />
+        <span className="text-gray-500 font-bold text-sm">3.50/5.00</span>
       </div>
     </div>
   );
